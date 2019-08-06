@@ -1,0 +1,48 @@
+*{
+   
+   
+    box-sizing: border-box;
+}
+
+.game-board{
+    background-image:url(/myLawn.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-self: baseline;
+  
+}
+
+ 
+.mole-land{
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-template-rows: 225px 250px 300px;
+    
+    /* background-image: linear-gradient(to bottom, #485720 -0%, #999966 125%) */
+}
+
+.mole-land > div {
+    z-index: 1;
+     scale: 50%;
+    /* display: flex;
+    justify-content: center; */
+    background-color: transparent;
+    border-radius: 50%;
+}
+.mound{
+    overflow-y: visible;
+    z-index: 0;
+    position: relative;
+    width: 300px;
+    top: 75%;
+}
+
+button{
+    background-image: linear-gradient(to bottom, #485720 -0%, #999966 125%);
+    width: 200px;
+    height: 75px;
+    border-radius: 50*2%;
+    background-color: rgb(110, 197, 107);
+}
+
