@@ -16,26 +16,41 @@
  
 .mole-land{
     display: grid;
-    grid-template-columns: 300px 300px 300px;
-    grid-template-rows: 225px 250px 300px;
+    grid-template-columns: 250px 250px 250px;
+    grid-template-rows: 250px 250px 250px;
     
     /* background-image: linear-gradient(to bottom, #485720 -0%, #999966 125%) */
 }
 
 .mole-land > div {
-    z-index: 1;
-     scale: 50%;
-    /* display: flex;
-    justify-content: center; */
+    position: relative;
+    overflow: hidden;
+    scale: 50%;
     background-color: transparent;
-    border-radius: 50%;
+    
 }
 .mound{
-    overflow-y: visible;
-    z-index: 0;
-    position: relative;
+    z-index: 1;
+    position: absolute;
     width: 300px;
-    top: 75%;
+    bottom: -15px;
+}
+.finMole:hover{
+    transform: rotate(0deg);
+    bottom:15px;
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    z-index: 3;
+
+}
+.finMole {
+    transition: .5s ease;
+    transform: rotate(-90deg);
+    bottom:-100px;
+    position: absolute;
+    width: 100%;
+    height: 70%;
 }
 
 button{
@@ -45,4 +60,6 @@ button{
     border-radius: 50*2%;
     background-color: rgb(110, 197, 107);
 }
+
+
 
