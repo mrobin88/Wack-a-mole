@@ -13,7 +13,6 @@
   
 }
 
- 
 .mole-land{
     display: grid;
     grid-template-columns: 250px 250px 250px;
@@ -28,29 +27,30 @@
     scale: 50%;
     background-color: transparent;
     
+    
 }
-.mound{
+.mound  {
     z-index: 1;
     position: absolute;
     width: 300px;
     bottom: -15px;
 }
-.finMole:hover{
-    transform: rotate(0deg);
+.down {
+    transition: 1s ease;
+    transform: rotate(-70deg);
+    bottom:-160px;
+    position: absolute;
+    width: 100%;
+    height: 70%;
+    }
+.up{
+    transform: rotate(-35deg);
     bottom:15px;
     position: absolute;
     width: 100%;
     height: 70%;
     z-index: 3;
 
-}
-.finMole {
-    transition: .5s ease;
-    transform: rotate(-90deg);
-    bottom:-100px;
-    position: absolute;
-    width: 100%;
-    height: 70%;
 }
 
 button{

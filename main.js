@@ -1,34 +1,40 @@
 const moleHole = { 
-     1: 'black',
+     1: 'transparent',
      0: 'transparent'
     };
 // Game Start variables.
-const bonkLimit = 1;
+const bonkLimit = 0;
 let bonks = 0;
 let score = 0; 
-let molesMade = 0;
-let gameModeMaxMoles = 5;
+let molesMade;
+let gameModeMaxMoles = 100;
 let board = [0,0,0,0,0,0,0,0,0];
 let result = null;
 let clicks = 0;
 let accu;
 let makeItStop = null;
+let moleLocation = null;
 
 const init = function(){    
     molesMade = 0;
+    mole[moleLocation]
     makeItStop = setInterval(() => {
-        
+
+        console.log("alkjdwqkjekjqwbejkbqwkejb")
         makeMole();
+       
         render();
-    },2000);
+        
+    },500);
+
 }
 
 function moleClicked(){
     if(board[event.target.id] === 0) {
         score-=2;
     }else if(board[event.target.id] === 1){
-        score+=1
-        bonks+=1
+        score + 1
+        bonks + 1
         if (bonks === bonkLimit){
             bonks = 0;
             makeMole();
@@ -44,8 +50,12 @@ const startBtn = document.getElementById('start');
 
 const scoreBoard = document.getElementById('score');
 
+const mole = document.querySelector('.mole-land img:nth-child(2)')
+let mo = document.getElementsByClassName('down');
+
+
 //<!------------ event listeners -------------->
-holes.addEventListener('click', function(event){
+mole.addEventListener('click', function(event){
     clicks+=1;
     moleClicked(event);
     console.log(event.target.id); 
@@ -53,18 +63,14 @@ holes.addEventListener('click', function(event){
 
 startBtn.addEventListener('click', init);
 
-    
-
+// mole[moleLocation].classList.remove('up')
 
 let render = function(){
-
+  
     board.forEach(function(value, index) {
-        document.getElementById(index).style.backgroundColor = moleHole[value];
+    document.getElementById(index).style.backgroundColor = moleHole[value];
     });
-score.innerHTML = `Score: ${score}`;
-
-
-
+score.innerHTML = `Score: ${score}`; 
 //display score
 }
 const gameEnd = function(){
@@ -80,11 +86,16 @@ const gameEnd = function(){
 }
 
 const makeMole = function(){
+    if(molesMade >= 1){
+    mo[moleLocation].classList.remove('up');
+    mo[moleLocation].classList.add('down');
+    }
+    moleLocation = Math.floor(Math.random() * 9); // 2
     
-    let moleLocation = Math.floor(Math.random() * 9); // 2
-    if(molesMade >= gameModeMaxMoles){
+    if(molesMade === gameModeMaxMoles){
         console.log(`moles made = ${molesMade} and clicks registered = ${clicks}.`)
         clearInterval(makeItStop);
+        gameEnd();
         board.fill(0)
         render();
         // should be moved to render function.
@@ -93,10 +104,13 @@ const makeMole = function(){
     } else {
     console.log(moleLocation);
     board.fill(0);
-    molesMade+=1;
+    molesMade++;
     console.log(`moles made ${molesMade}`);
     board[moleLocation] = 1;
+    mo[moleLocation].classList.add('up');
+    
     render();
+    
     }
 }
 
