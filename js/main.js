@@ -10,16 +10,13 @@ let bonks = 0;
 let score = 0; 
 let molesMade;
 let gameModeMaxMoles = 5;
-let board = new Array(27).fill(0);
-console.log(board)//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let board = new Array(9).fill(0);
+console.log(board);
 let result = null;
 let clicks = 0;
 let accu;
 let makeItStop = null;
 let moleLocation = null;
-
-//localStorge for de user IghScore mon,da setup 
-
 let highScore = localStorage.getItem('highScore') || 0;
 localStorage.setItem('highScore',highScore);
 
@@ -78,7 +75,7 @@ const init = function(){
    makeItStop = setInterval(() => {
         makeMole();
         render();
-    },2000);
+    },1000);
 }
 function moleClicked(e){   
     if(e.target.classList[1] === 'up'){
@@ -126,8 +123,7 @@ const makeMole = function(){
     mole[moleLocation].classList.remove('up');
     mole[moleLocation].classList.add('down');
     }
-    moleLocation = Math.floor(Math.random() * 27); 
-    
+    moleLocation = Math.floor(Math.random() * 9);
     if(molesMade === gameModeMaxMoles){
         console.log(`moles made = ${molesMade} and clicks registered = ${clicks}.`)
         clearInterval(makeItStop);
