@@ -3,9 +3,9 @@ const moleHole = {
      0: 'transparent'
     };
 // Game Start variables.
-
+debugger
 let sounds = new Audio();
-const bonkLimit = 10;
+const bonkLimit = null;
 let bonks = 0;
 let score = 0; 
 let molesMade;
@@ -40,6 +40,32 @@ const moleSound = function(){
     sounds.src = '/sounds/dead.wav'
     sounds.play();
 }
+const gameEnd = function(){
+    getHigh(score);
+    
+    console.log(` 
+        bonkLimit:${bonkLimit}
+        bonks:${bonks}
+        score:${score} 
+        molesMade:${molesMade}
+        gameModeMaxMoles:${gameModeMaxMoles}
+        board:${board}
+        result:${result}
+        clicks:${clicks}
+        makeItStop:${makeItStop}
+        moleLocation :${moleLocation} 
+        highScore:${highScore}
+`)
+    if(score > molesMade){
+    display.innerHTML = `Ultra Score: ${score} Title earned SLAYER OF THE UNDERWORLD!`
+    }else if(score === molesMade){
+        display.innerHTML = `good score: ${score} Terminex is hiring. https://careers.servicemaster.com/en-US/page/terminix `
+    }else if(score === 0){
+        display.innerHTML = `0 moles: You are a saint, a friend of the moles. The mole god is pleased.`
+    }else if(score < 0){display.innerHTML = `score: ${score} suggested read: How to Wack-A-Mole. for dummies.`
+}
+varInit();
+}
 const getHigh = function(s){
     if(s > highScore){
         highScore = s;
@@ -56,7 +82,7 @@ const init = function(){
         makeMole();
         render();
         
-    },1500);
+    },2000);
 
 }
 
@@ -100,32 +126,7 @@ let render = function(){
     theScore.innerHTML = `Score: ${score}`; 
     hiScrB.innerHTML = `Hi-Score:${highScore}`
 }
-const gameEnd = function(){
-    getHigh(score);
-    varInit();
-    console.log(` 
-        bonkLimit:${bonkLimit}
-        bonks:${bonks}
-        score:${score} 
-        molesMade:${molesMade}
-        gameModeMaxMoles:${gameModeMaxMoles}
-        board:${board}
-        result:${result}
-        clicks:${clicks}
-        makeItStop:${makeItStop}
-        moleLocation :${moleLocation} 
-        highScore:${highScore}
-`)
-    if(score > molesMade){
-    display.innerHTML = `Ultra Score: ${score} Title earned SLAYER OF THE UNDERWORLD!`
-    }else if(score === molesMade){
-        display.innerHTML = `good score: ${score} Terminex is hiring. https://careers.servicemaster.com/en-US/page/terminix `
-    }else if(score === 0){
-        display.innerHTML = `0 moles: You are a saint, a friend of the moles. The mole god is pleased.`
-    }else{display.innerHTML = `score: ${score} suggested read: How to Wack-A-Mole. for dummies.`
-}
 
-}
 
 const makeMole = function(){
     if(molesMade >= 1){
