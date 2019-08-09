@@ -3,59 +3,92 @@ const moleHole = {
      0: 'transparent'
     };
 // Game Start variables.
-const bonkLimit = 0;
+
+let sounds = new Audio();
+const bonkLimit = 10;
 let bonks = 0;
 let score = 0; 
 let molesMade;
-let gameModeMaxMoles = 100;
-let board = [0,0,0,0,0,0,0,0,0];
+let gameModeMaxMoles = 20;
+let board = new Array(27).fill(0);
+console.log(board)//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let result = null;
 let clicks = 0;
 let accu;
 let makeItStop = null;
 let moleLocation = null;
 
-const init = function(){    
-    molesMade = 0;
-    mole[moleLocation]
-    makeItStop = setInterval(() => {
+//localStorge for de user IghScore mon,da setup 
 
-        console.log("alkjdwqkjekjqwbejkbqwkejb")
+let highScore = localStorage.getItem('highScore') || 0;
+localStorage.setItem('highScore',highScore);
+
+const varInit = function(){
+    clicks = 0;
+    makeItStop = 0;
+    moleLocation = null;
+    bonks = 0;
+    score = 0;
+    molesMade = 0;    
+}
+const bonkSound = function(){
+    sounds.src = '/sounds/hammerDown.wav'
+    sounds.play();
+}
+
+const moleSound = function(){
+    sounds.src = '/sounds/dead.wav'
+    sounds.play();
+}
+const getHigh = function(s){
+    if(s > highScore){
+        highScore = s;
+        localStorage.setItem('highScore',highScore);
+    }
+    return highScore;
+}
+
+const init = function(){ 
+    score = 0;
+    molesMade = 0;
+
+    makeItStop = setInterval(() => {
         makeMole();
-       
         render();
         
-    },500);
+    },1500);
 
 }
 
-function moleClicked(){
-    if(board[event.target.id] === 0) {
-        score-=2;
-    }else if(board[event.target.id] === 1){
-        score + 1
-        bonks + 1
+function moleClicked(e){
+   
+    if(e.target.classList[1] === 'up'){
+        console.log('direct hit!')
+        moleSound();
+        score++;
+        bonks++;
         if (bonks === bonkLimit){
             bonks = 0;
             makeMole();
         }
+    } else {
+        bonkSound();
+        console.log('miss')
+        score--;
     }    
     render();
 }
 
-//element ref targets
-const holes = document.querySelector('div.mole-land');
-
+//<----------------html ref vars--------------------->
 const startBtn = document.getElementById('start'); 
+const holes = document.querySelector('div.mole-land');
+const display = document.getElementById('display');
+const theScore = document.getElementById('score');
+const mole = document.getElementsByClassName('down');
+const hiScrB = document.getElementById('hiScore');
+//<!------------- event listeners ---------------->
 
-const scoreBoard = document.getElementById('score');
-
-const mole = document.querySelector('.mole-land img:nth-child(2)')
-let mo = document.getElementsByClassName('down');
-
-
-//<!------------ event listeners -------------->
-mole.addEventListener('click', function(event){
+holes.addEventListener('click', function(event){
     clicks+=1;
     moleClicked(event);
     console.log(event.target.id); 
@@ -63,34 +96,43 @@ mole.addEventListener('click', function(event){
 
 startBtn.addEventListener('click', init);
 
-// mole[moleLocation].classList.remove('up')
-
 let render = function(){
-  
-    board.forEach(function(value, index) {
-    document.getElementById(index).style.backgroundColor = moleHole[value];
-    });
-score.innerHTML = `Score: ${score}`; 
-//display score
+    theScore.innerHTML = `Score: ${score}`; 
+    hiScrB.innerHTML = `Hi-Score:${highScore}`
 }
 const gameEnd = function(){
-
+    getHigh(score);
+    varInit();
+    console.log(` 
+        bonkLimit:${bonkLimit}
+        bonks:${bonks}
+        score:${score} 
+        molesMade:${molesMade}
+        gameModeMaxMoles:${gameModeMaxMoles}
+        board:${board}
+        result:${result}
+        clicks:${clicks}
+        makeItStop:${makeItStop}
+        moleLocation :${moleLocation} 
+        highScore:${highScore}
+`)
     if(score > molesMade){
-    scoreBoard.innerHTML = `high score: ${score}  Title earned SLAYER OF THE UNDERWORLD!`
+    display.innerHTML = `Ultra Score: ${score} Title earned SLAYER OF THE UNDERWORLD!`
     }else if(score === molesMade){
-        scoreBoard.innerHTML = `good score: ${score} Terminex is hiring. https://careers.servicemaster.com/en-US/page/terminix `
+        display.innerHTML = `good score: ${score} Terminex is hiring. https://careers.servicemaster.com/en-US/page/terminix `
     }else if(score === 0){
-        scoreBoard.innerHTML = `0 moles: You are a saint, a friend of the moles. The mole god is pleased.`
-    }else{scoreBoard.innerHTML = `score: ${score} suggested read: How to Wack-A-Mole. for dummies.`
+        display.innerHTML = `0 moles: You are a saint, a friend of the moles. The mole god is pleased.`
+    }else{display.innerHTML = `score: ${score} suggested read: How to Wack-A-Mole. for dummies.`
 }
+
 }
 
 const makeMole = function(){
     if(molesMade >= 1){
-    mo[moleLocation].classList.remove('up');
-    mo[moleLocation].classList.add('down');
+    mole[moleLocation].classList.remove('up');
+    mole[moleLocation].classList.add('down');
     }
-    moleLocation = Math.floor(Math.random() * 9); // 2
+    moleLocation = Math.floor(Math.random() * 27); 
     
     if(molesMade === gameModeMaxMoles){
         console.log(`moles made = ${molesMade} and clicks registered = ${clicks}.`)
@@ -98,30 +140,18 @@ const makeMole = function(){
         gameEnd();
         board.fill(0)
         render();
-        // should be moved to render function.
     }else if (board[moleLocation] === 1){
         makeMole();
     } else {
-    console.log(moleLocation);
+    
     board.fill(0);
     molesMade++;
-    console.log(`moles made ${molesMade}`);
+    
     board[moleLocation] = 1;
-    mo[moleLocation].classList.add('up');
+    mole[moleLocation].classList.add('up')
     
     render();
     
     }
 }
-
-//this is a intervalcounter for keyframe animations
-// var showPercent = window.setInterval(function() {
-//     if (currentPercent < 100) {
-//       currentPercent += 1;
-//     } else {
-//       currentPercent = 0;
-//     }
-//     // Updates a div that displays the current percent
-//     document.getElementById('percent').innerHTML = currentPercent;
-//   }, 40);
-
+render();
