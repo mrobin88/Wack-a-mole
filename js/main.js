@@ -3,13 +3,13 @@ const moleHole = {
      0: 'transparent'
     };
 // Game Start variables.
-debugger
+
 let sounds = new Audio();
 const bonkLimit = null;
 let bonks = 0;
 let score = 0; 
 let molesMade;
-let gameModeMaxMoles = 20;
+let gameModeMaxMoles = 5;
 let board = new Array(27).fill(0);
 console.log(board)//[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let result = null;
@@ -25,11 +25,10 @@ localStorage.setItem('highScore',highScore);
 
 const varInit = function(){
     clicks = 0;
-    makeItStop = 0;
     moleLocation = null;
     bonks = 0;
     score = 0;
-    molesMade = 0;    
+      
 }
 const bonkSound = function(){
     sounds.src = '/sounds/hammerDown.wav'
@@ -73,21 +72,15 @@ const getHigh = function(s){
     }
     return highScore;
 }
-
 const init = function(){ 
     score = 0;
     molesMade = 0;
-
-    makeItStop = setInterval(() => {
+   makeItStop = setInterval(() => {
         makeMole();
         render();
-        
     },2000);
-
 }
-
-function moleClicked(e){
-   
+function moleClicked(e){   
     if(e.target.classList[1] === 'up'){
         console.log('direct hit!')
         moleSound();
