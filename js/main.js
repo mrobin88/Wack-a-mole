@@ -24,16 +24,15 @@ const varInit = function(){
     clicks = 0;
     moleLocation = null;
     bonks = 0;
-    score = 0;
-      
+    
 }
 const bonkSound = function(){
-    sounds.src = '/sounds/hammerDown.wav'
+    sounds.src = 'sounds/hammerDown.wav'
     sounds.play();
 }
 
 const moleSound = function(){
-    sounds.src = '/sounds/dead.wav'
+    sounds.src = 'sounds/dead.wav'
     sounds.play();
 }
 const gameEnd = function(){
@@ -60,7 +59,7 @@ const gameEnd = function(){
         display.innerHTML = `0 moles: You are a saint, a friend of the moles. The mole god is pleased.`
     }else if(score < 0){display.innerHTML = `score: ${score} suggested read: How to Wack-A-Mole. for dummies.`
 }
-varInit();
+
 }
 const getHigh = function(s){
     if(s > highScore){
@@ -75,8 +74,9 @@ const init = function(){
    makeItStop = setInterval(() => {
         makeMole();
         render();
-    },1000);
+    },2000);
 }
+
 function moleClicked(e){   
     if(e.target.classList[1] === 'up'){
         console.log('direct hit!')
@@ -95,14 +95,14 @@ function moleClicked(e){
     render();
 }
 
-//<----------------html ref vars--------------------->
+//<------------------html ref vars--------------------->
 const startBtn = document.getElementById('start'); 
 const holes = document.querySelector('div.mole-land');
 const display = document.getElementById('display');
 const theScore = document.getElementById('score');
 const mole = document.getElementsByClassName('down');
 const hiScrB = document.getElementById('hiScore');
-//<!------------- event listeners ---------------->
+//<!----------------event listeners ------------------->
 
 holes.addEventListener('click', function(event){
     clicks+=1;
