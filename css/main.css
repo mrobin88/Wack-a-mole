@@ -3,7 +3,7 @@
     cursor:crosshair;
 }
 .game-board {
-    background-image:url(img/myLawn.jpg);
+    background-image:url(/img/myLawn.jpg);
     background-size: 100%;
     display: flex;
     justify-content: center;
