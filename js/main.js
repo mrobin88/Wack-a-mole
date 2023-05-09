@@ -38,23 +38,10 @@ const moleSound = function(){
 const gameEnd = function(){
     getHigh(score);
     
-    console.log(` 
-        bonkLimit:${bonkLimit}
-        bonks:${bonks}
-        score:${score} 
-        molesMade:${molesMade}
-        gameModeMaxMoles:${gameModeMaxMoles}
-        board:${board}
-        result:${result}
-        clicks:${clicks}
-        makeItStop:${makeItStop}
-        moleLocation :${moleLocation} 
-        highScore:${highScore}
-`)
     if(score > molesMade){
     display.innerHTML = `Ultra Score: ${score} Title earned SLAYER OF THE UNDERWORLD!`
     }else if(score === molesMade){
-        display.innerHTML = `good score: ${score} Terminex is hiring. https://careers.servicemaster.com/en-US/page/terminix `
+        display.innerHTML = `good score: ${score} `
     }else if(score === 0){
         display.innerHTML = `0 moles: You are a saint, a friend of the moles. The mole god is pleased.`
     }else if(score < 0){display.innerHTML = `score: ${score} suggested read: How to Wack-A-Mole. for dummies.`
@@ -107,7 +94,7 @@ const hiScrB = document.getElementById('hiScore');
 holes.addEventListener('click', function(event){
     clicks+=1;
     moleClicked(event);
-    console.log(event.target.id); 
+
 });
 
 startBtn.addEventListener('click', init);
