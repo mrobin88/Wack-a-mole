@@ -2,18 +2,23 @@
     box-sizing: border-box;
     cursor:crosshair;
 }
+
 .game-board {
     background-image:url(/img/myLawn.jpg);
     background-size: 100%;
     display: flex;
     justify-content: center;
-    align-self: baseline; 
+    align-self: baseline;
+    max-width: 100%;
+    max-height: 100%;
 }
+
 .mole-land {
     display: grid;
-    grid-template-columns: 250px 250px 250px; 
-    grid-template-rows: 250px 250px 250px;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(30%, 1fr));
 }
+
 .mole-land > div {
     pointer-events: all;
     position: relative;
@@ -25,7 +30,7 @@
 .mound {
     z-index: 1;
     position: absolute;
-    width: 300px;
+    width: 50%;
     bottom: -15px;
 }
 
@@ -34,8 +39,8 @@
     transform: rotate(-70deg);
     bottom:-160px;
     position: absolute;
-    width: 10%;
-    height: 10%;
+    width: 50%;
+    height: auto;
 }
 
 .up {
@@ -53,29 +58,35 @@ button {
     color:silver;   
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-weight: thin;
-    font-size: 60px;
+    font-size: 6vw;
     background-image: linear-gradient(to bottom, coral -0%, #999966 125%);
-    width: 250px;
-    height: 75px;
+    width: 50%;
+    height: auto;
     border-radius: 3em;   
 }
+
 button:hover {
     background-image: linear-gradient(to bottom, coral -100%, #999966 0%);
 }
 
 #display{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size:25px;
+    font-size: 2vw;
 }
+
 #score{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size:25px;
+    font-size: 2vw;
 }
+
 #hiScore{
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size:25px;
+    font-size: 2vw;
 }
 
-
-
-
+@media screen and (max-width: 768px) {
+    .mole-land {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+}
